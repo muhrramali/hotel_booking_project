@@ -1,0 +1,51 @@
+{% extends 'manage/base.html' %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-blue"><h2>{{ total_rooms }}</h2><p>Total Rooms</p></div></div>
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-green"><h2>{{ available_rooms }}</h2><p>Available</p></div></div>
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-red"><h2>{{ occupied_rooms }}</h2><p>Occupied</p></div></div>
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-purple"><h2>{{ total_guests }}</h2><p>Guests</p></div></div>
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-teal"><h2>{{ pending_bookings }}</h2><p>Pending</p></div></div>
+  <div class="col-md-2 col-4"><div class="stat-card bg-grad-gold"><h2 style="font-size:1.3rem">PKR {{ total_revenue }}</h2><p>Revenue</p></div></div>
+</div>
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card p-3">
+      <div class="d-flex justify-content-between mb-3">
+        <h6 class="fw-bold mb-0">Recent Reservations</h6>
+        <a href="{% url 'reservation_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <table class="table table-sm table-hover mb-0">
+        <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-In</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for r in recent_reservations %}
+        <tr>
+          <td>{{ r.pk }}</td><td>{{ r.guest.full_name }}</td><td>{{ r.room.room_number }}</td><td>{{ r.check_in }}</td>
+          <td><span class="badge badge-{{ r.status|lower|cut:' ' }}">{{ r.status }}</span></td>
+        </tr>
+        {% empty %}<tr><td colspan="5" class="text-center text-muted">No reservations yet.</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 mb-3">
+      <h6 class="fw-bold mb-3">Quick Actions</h6>
+      <div class="d-grid gap-2">
+        <a href="{% url 'reservation_create' %}" class="btn btn-gold">New Reservation</a>
+        <a href="{% url 'guest_create' %}" class="btn btn-outline-secondary">Register Guest</a>
+        <a href="{% url 'room_create' %}" class="btn btn-outline-secondary">Add Room</a>
+      </div>
+    </div>
+    <div class="card p-3">
+      <h6 class="fw-bold mb-3">Room Status</h6>
+      <div class="row g-2">
+        {% for room in rooms %}
+        <div class="col-4"><div class="room-card {{ room.status|lower }}"><strong>{{ room.room_number }}</strong><br><small>{{ room.room_type }}</small></div></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'hotel/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card p-4">
+      {% if extra_info %}
+      <div class="alert alert-info mb-3"><i class="fas fa-info-circle me-2"></i>{{ extra_info }}</div>
+      {% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small mt-1">{{ field.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="d-flex gap-2 mt-3">
+          <button type="submit" class="btn btn-gold px-4"><i class="fas fa-save me-1"></i>Save</button>
+          <a href="{% url back %}" class="btn btn-outline-secondary px-4">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  input, select, textarea { border-radius: 8px !important; border: 1.5px solid #d1d5db !important; padding: 8px 12px !important; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: #c9a84c !important; outline: none !important; box-shadow: 0 0 0 3px rgba(201,168,76,.15) !important; }
+</style>
+{% endblock %}

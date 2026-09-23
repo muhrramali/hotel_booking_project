@@ -1,0 +1,23 @@
+{% extends 'manage/base.html' %}
+{% block page_title %}Payments{% endblock %}
+{% block content %}
+<div class="row g-3 mb-3">
+  <div class="col-md-6"><div class="card p-3"><strong>Total Collected:</strong> PKR {{ total_paid }}</div></div>
+  <div class="col-md-6"><div class="card p-3"><strong>Pending:</strong> PKR {{ total_pending }}</div></div>
+</div>
+<div class="card p-3">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for p in payments %}
+    <tr>
+      <td>{{ p.pk }}</td><td>{{ p.reservation.guest.full_name }}</td><td>{{ p.reservation.room.room_number }}</td>
+      <td>PKR {{ p.amount }}</td><td>{{ p.method }}</td>
+      <td><span class="badge badge-{{ p.status|lower }}">{{ p.status }}</span></td><td>{{ p.payment_date }}</td>
+      <td><a href="{% url 'payment_edit' p.pk %}" class="btn btn-sm btn-outline-primary">Edit</a></td>
+    </tr>
+    {% empty %}<tr><td colspan="8" class="text-center text-muted">No payments recorded.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

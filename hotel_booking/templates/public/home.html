@@ -1,0 +1,145 @@
+{% extends 'public/base.html' %}
+{% load static %}
+{% block title %}Kutwal Dream Resort – Heaven in Haramosh Valley{% endblock %}
+
+{% block content %}
+<section class="hero" id="home">
+  <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active"><img class="carousel-image" src="{% static 'images/hero1.jpg' %}" alt="Kutwal Valley Mountains"></div>
+      <div class="carousel-item"><img class="carousel-image" src="{% static 'images/hero2.jpg' %}" alt="Alpine Lake"></div>
+      <div class="carousel-item"><img class="carousel-image" src="{% static 'images/hero3.jpg' %}" alt="Snow Peaks"></div>
+      <div class="carousel-item"><img class="carousel-image" src="{% static 'images/hero4.jpg' %}" alt="Mountain Lodge"></div>
+    </div>
+  </div>
+  <div class="hero-overlay">
+    <p><i class="fas fa-mountain"></i> Haramosh Valley · Gilgit-Baltistan · Pakistan</p>
+    <h2>Welcome to Kutwal Dream Resort</h2>
+    <p>Experience paradise at 9,000 ft — where Kutwal Lake meets the mighty Karakoram peaks. Book your mountain escape today.</p>
+    <div>
+      <a href="#" class="btn-kutwal" onclick="openBooking(); return false;"><i class="fas fa-calendar-check me-2"></i>Book Your Stay</a>
+      <a href="#rooms" class="btn-outline-light-kutwal">Explore Rooms</a>
+    </div>
+  </div>
+</section>
+
+<div class="booking-backdrop" id="bookingBackdrop" onclick="closeBooking()"></div>
+<div class="booking-panel" id="bookingPanel">
+  <div class="head">
+    <h5 class="mb-0"><i class="fas fa-bed me-2"></i>Reservation Request</h5>
+    <button class="btn btn-sm btn-light" onclick="closeBooking()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="body">
+    <form method="post" action="{% url 'public_booking' %}">
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">First Name</label>{{ booking_form.first_name }}</div>
+        <div class="col-md-6"><label class="form-label">Last Name</label>{{ booking_form.last_name }}</div>
+        <div class="col-md-6"><label class="form-label">Email</label>{{ booking_form.email }}</div>
+        <div class="col-md-6"><label class="form-label">Phone</label>{{ booking_form.phone }}</div>
+        <div class="col-md-6"><label class="form-label">Country</label>{{ booking_form.country }}</div>
+        <div class="col-md-6"><label class="form-label">CNIC / Passport</label>{{ booking_form.cnic }}</div>
+        <div class="col-md-6"><label class="form-label">Room Type</label>{{ booking_form.room_type }}</div>
+        <div class="col-md-6"><label class="form-label">Bed Type</label>{{ booking_form.bed_type }}</div>
+        <div class="col-md-6"><label class="form-label">Meal Plan</label>{{ booking_form.meal_plan }}</div>
+        <div class="col-md-6"><label class="form-label">Guests</label>{{ booking_form.num_guests }}</div>
+        <div class="col-md-6"><label class="form-label">Check-In</label>{{ booking_form.check_in }}</div>
+        <div class="col-md-6"><label class="form-label">Check-Out</label>{{ booking_form.check_out }}</div>
+        <div class="col-12"><label class="form-label">Special Requests</label>{{ booking_form.notes }}</div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success w-100"><i class="fas fa-paper-plane me-2"></i>Submit Booking Request</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<section class="section" id="about">
+  <h2 class="section-title">About Kutwal Dream Resort</h2>
+  <p class="section-sub">Nestled in the heart of Haramosh Valley, 60 km from Gilgit — your gateway to Kutwal Lake and the Karakoram.</p>
+  <div class="about-grid">
+    <img src="{% static 'images/hero2.jpg' %}" alt="Kutwal Lake View">
+    <div>
+      <h3>Mountain Paradise at Kutwal Valley</h3>
+      <p>Kutwal Dream Resort offers comfortable accommodation for trekkers, families, and adventure seekers visiting the famous Kutwal Lake and Haramosh Peak (7,409m). Our resort provides warm hospitality, local cuisine, guided treks, and jeep transport from Sassi village.</p>
+      <p>Whether you are trekking to Kutwal Lake, exploring Haramosh Valley, or simply enjoying the alpine meadows — we make your stay unforgettable.</p>
+      <div class="about-stats">
+        <div><strong>9,000 ft</strong>Altitude</div>
+        <div><strong>15 min</strong>To Kutwal Lake</div>
+        <div><strong>4.8★</strong>Guest Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#fff" id="rooms">
+  <img src="{% static 'images/homeanimatebg.svg' %}" class="animate-bg" alt="">
+  <h2 class="section-title">Our Rooms & Chalets</h2>
+  <p class="section-sub">From cozy trekker rooms to luxurious lake-view chalets — find your perfect mountain retreat.</p>
+  <div class="room-grid">
+    {% for item in featured %}
+    <div class="room-card-pub">
+      <img src="{% static 'images/rooms/' %}{{ item.image }}" alt="{{ item.title }}">
+      <div class="info">
+        <h4>{{ item.title }}</h4>
+        <div class="room-icons">
+          <i class="fas fa-wifi"></i>
+          {% if item.icons >= 2 %}<i class="fas fa-utensils"></i>{% endif %}
+          {% if item.icons >= 3 %}<i class="fas fa-fire"></i>{% endif %}
+          {% if item.icons >= 4 %}<i class="fas fa-mountain"></i>{% endif %}
+          {% if item.icons >= 5 %}<i class="fas fa-binoculars"></i>{% endif %}
+        </div>
+        <div class="price">From PKR {{ item.price }} / night</div>
+        <button class="btn btn-kutwal btn-sm mt-2 w-100" onclick="openBooking()">Book Now</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section" id="facilities">
+  <h2 class="section-title">Resort Facilities</h2>
+  <p class="section-sub">Everything you need for a complete mountain holiday experience.</p>
+  <div class="facility-grid">
+    {% for f in facilities %}
+    <div class="facility-card">
+      <img src="{% static 'images/facilities/' %}{{ f.image }}" alt="{{ f.name }}">
+      <div class="overlay">
+        <h4>{{ f.name }}</h4>
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section contact-section" id="contact">
+  <h2 class="section-title" style="color:var(--accent)">Contact Us</h2>
+  <p>Reach us for bookings, trek packages, and group reservations</p>
+  <div class="contact-info">
+    <div><i class="fas fa-map-marker-alt"></i> Kutwal Village, Haramosh Valley, Gilgit-Baltistan</div>
+    <div><i class="fas fa-phone"></i> +92 300 1234567</div>
+    <div><i class="fas fa-envelope"></i> info@kutwaldreamresort.com</div>
+  </div>
+  <div class="social">
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-whatsapp"></i>
+  </div>
+  <p class="mt-4" style="opacity:.6;font-size:.85rem">© 2026 Kutwal Dream Resort · DBMS Lab Project · Django 4.2 + MySQL</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openBooking() {
+  document.getElementById('bookingPanel').classList.add('show');
+  document.getElementById('bookingBackdrop').classList.add('show');
+}
+function closeBooking() {
+  document.getElementById('bookingPanel').classList.remove('show');
+  document.getElementById('bookingBackdrop').classList.remove('show');
+}
+if (window.location.hash === '#booking') openBooking();
+</script>
+{% endblock %}

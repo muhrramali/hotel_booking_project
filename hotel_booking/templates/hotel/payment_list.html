@@ -1,0 +1,33 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Payments{% endblock %}
+{% block page_title %}Payment Records{% endblock %}
+{% block content %}
+<div class="card">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>Res#</th><th>Guest</th><th>Room</th><th>Amount</th><th>Method</th><th>Date</th><th>Status</th><th>Txn ID</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for p in payments %}
+    <tr>
+      <td>{{ p.reservation.pk }}</td>
+      <td class="fw-bold">{{ p.reservation.guest.full_name }}</td>
+      <td>{{ p.reservation.room.room_number }}</td>
+      <td>PKR {{ p.amount }}</td>
+      <td>{{ p.method }}</td>
+      <td>{{ p.payment_date }}</td>
+      <td>
+        {% if p.status == 'Paid' %}<span class="badge badge-paid">Paid</span>
+        {% elif p.status == 'Refunded' %}<span class="badge badge-refunded">Refunded</span>
+        {% else %}<span class="badge badge-pending">Pending</span>{% endif %}
+      </td>
+      <td>{{ p.transaction_id|default:"—" }}</td>
+      <td>
+        <a href="{% url 'payment_edit' p.pk %}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="9" class="text-center text-muted py-4">No payments recorded yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

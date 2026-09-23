@@ -1,0 +1,34 @@
+{% extends 'public/base.html' %}
+{% block title %}My Bookings – Kutwal Dream Resort{% endblock %}
+{% block content %}
+<section class="section" style="padding-top:120px">
+  <h2 class="section-title">My Bookings</h2>
+  {% if guest %}
+  <p class="section-sub">Welcome, {{ guest.full_name }}! Here are your reservations.</p>
+  <div class="table-responsive" style="max-width:1000px;margin:0 auto">
+    <table class="table table-hover bg-white rounded shadow-sm">
+      <thead class="table-dark">
+        <tr><th>#</th><th>Room</th><th>Check-In</th><th>Check-Out</th><th>Nights</th><th>Total</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        {% for r in reservations %}
+        <tr>
+          <td>{{ r.pk }}</td>
+          <td>{{ r.room.room_type }} ({{ r.room.room_number }})</td>
+          <td>{{ r.check_in }}</td>
+          <td>{{ r.check_out }}</td>
+          <td>{{ r.nights }}</td>
+          <td>PKR {{ r.total_cost }}</td>
+          <td><span class="badge bg-secondary">{{ r.status }}</span></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No bookings yet. <a href="{% url 'home' %}#booking">Book your stay</a></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="text-center text-muted">No guest profile linked to your account.</p>
+  {% endif %}
+</section>
+{% endblock %}

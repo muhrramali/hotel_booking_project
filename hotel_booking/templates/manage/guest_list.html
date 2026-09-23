@@ -1,0 +1,25 @@
+{% extends 'manage/base.html' %}
+{% block page_title %}Guests{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5 class="mb-0">Registered Guests</h5>
+  <a href="{% url 'guest_create' %}" class="btn btn-gold btn-sm"><i class="fas fa-user-plus me-1"></i>Add Guest</a>
+</div>
+<div class="card p-3">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>CNIC</th><th>Country</th><th>Bookings</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for g in guests %}
+    <tr>
+      <td>{{ g.full_name }}</td><td>{{ g.email }}</td><td>{{ g.phone }}</td><td>{{ g.cnic }}</td><td>{{ g.country }}</td>
+      <td>{{ g.res_count }}</td>
+      <td>
+        <a href="{% url 'guest_edit' g.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'guest_delete' g.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+      </td>
+    </tr>
+    {% empty %}<tr><td colspan="7" class="text-center text-muted">No guests yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

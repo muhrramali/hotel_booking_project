@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --primary: #1b4332;
+  --accent: #d4a373;
+  --dark: #0d1b2a;
+  --light: #f8f5f0;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--light); color: #333; }
+
+.navbar-kutwal {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(13, 27, 42, 0.85); backdrop-filter: blur(8px);
+  padding: 10px 5%; display: flex; justify-content: space-between; align-items: center;
+}
+.navbar-kutwal .brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+.navbar-kutwal .brand img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+.navbar-kutwal .brand h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 0; color: var(--accent); }
+.navbar-kutwal .brand span { font-size: .7rem; color: #ccc; display: block; }
+.navbar-kutwal nav { display: flex; gap: 24px; align-items: center; }
+.navbar-kutwal nav a { color: #eee; text-decoration: none; font-size: .9rem; }
+.navbar-kutwal nav a:hover { color: var(--accent); }
+
+.hero { height: 100vh; position: relative; }
+.hero .carousel, .hero .carousel-inner, .hero .carousel-item { height: 100vh; }
+.hero .carousel-image { width: 100%; height: 100vh; object-fit: cover; }
+.hero-overlay {
+  position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.3), rgba(13,27,42,.7));
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; padding-top: 60px;
+}
+.hero-overlay h2 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,.5); }
+.hero-overlay p { font-size: 1.1rem; max-width: 700px; margin: 16px 0 28px; opacity: .95; }
+.btn-kutwal { background: var(--accent); color: #1a1a1a; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 600; text-decoration: none; display: inline-block; }
+.btn-kutwal:hover { background: #c49363; color: #000; }
+.btn-outline-light-kutwal { border: 2px solid #fff; color: #fff; padding: 10px 24px; border-radius: 30px; text-decoration: none; margin-left: 12px; }
+.btn-outline-light-kutwal:hover { background: #fff; color: var(--dark); }
+
+.booking-panel {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(680px, 95vw); max-height: 90vh; overflow-y: auto;
+  background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  z-index: 2000; display: none; padding: 0;
+}
+.booking-panel.show { display: block; }
+.booking-panel .head { background: var(--primary); color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 16px 16px 0 0; }
+.booking-panel .body { padding: 20px; }
+.booking-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 1999; display: none; }
+.booking-backdrop.show { display: block; }
+
+.section { padding: 80px 5%; }
+.section-title { font-family: 'Playfair Display', serif; text-align: center; font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; }
+.section-sub { text-align: center; color: #666; max-width: 700px; margin: 0 auto 40px; }
+
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; max-width: 1100px; margin: 0 auto; }
+.about-grid img { width: 100%; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,.15); }
+.about-grid h3 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.8rem; }
+.about-stats { display: flex; gap: 24px; margin-top: 20px; }
+.about-stats div { background: var(--primary); color: #fff; padding: 16px 20px; border-radius: 12px; text-align: center; flex: 1; }
+.about-stats strong { display: block; font-size: 1.4rem; color: var(--accent); }
+
+.room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+.room-card-pub { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.08); transition: transform .2s; }
+.room-card-pub:hover { transform: translateY(-6px); }
+.room-card-pub img { width: 100%; height: 200px; object-fit: cover; }
+.room-card-pub .info { padding: 18px; }
+.room-card-pub h4 { margin: 0 0 8px; color: var(--primary); }
+.room-card-pub .price { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+.room-icons { color: var(--primary); margin: 10px 0; }
+.room-icons i { margin-right: 8px; }
+
+.facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+.facility-card { position: relative; height: 220px; border-radius: 16px; overflow: hidden; }
+.facility-card img { width: 100%; height: 100%; object-fit: cover; }
+.facility-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; color: #fff; }
+.facility-card h4 { margin: 0; font-family: 'Playfair Display', serif; }
+.facility-card p { margin: 6px 0 0; font-size: .85rem; opacity: .9; }
+
+.contact-section { background: var(--dark); color: #fff; text-align: center; }
+.contact-section .social { font-size: 1.8rem; margin: 20px 0; }
+.contact-section .social i { margin: 0 16px; color: var(--accent); cursor: pointer; }
+.contact-info { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
+.contact-info div i { color: var(--accent); margin-right: 8px; }
+
+.auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--dark), var(--primary)); padding: 40px 20px; }
+.auth-card { background: #fff; border-radius: 16px; padding: 36px; width: min(440px, 100%); box-shadow: 0 10px 40px rgba(0,0,0,.2); }
+.auth-card h2 { font-family: 'Playfair Display', serif; color: var(--primary); text-align: center; }
+
+.animate-bg { width: 100%; max-width: 900px; margin: 0 auto 30px; display: block; opacity: .6; }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .hero-overlay h2 { font-size: 2rem; }
+  .navbar-kutwal nav { gap: 12px; font-size: .8rem; }
+}

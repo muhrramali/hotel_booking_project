@@ -1,0 +1,36 @@
+{% extends 'manage/base.html' %}
+{% block page_title %}Reservations{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5 class="mb-0">All Reservations</h5>
+  <a href="{% url 'reservation_create' %}" class="btn btn-gold btn-sm"><i class="fas fa-plus me-1"></i>New Reservation</a>
+</div>
+<div class="card p-3">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>#</th><th>Guest</th><th>Room</th><th>Check-In</th><th>Check-Out</th><th>Meal</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for r in reservations %}
+    <tr>
+      <td>{{ r.pk }}</td><td>{{ r.guest.full_name }}</td><td>{{ r.room.room_number }}</td>
+      <td>{{ r.check_in }}</td><td>{{ r.check_out }}</td><td>{{ r.meal_plan }}</td><td>PKR {{ r.total_cost }}</td>
+      <td><span class="badge badge-{{ r.status|lower|cut:' ' }}">{{ r.status }}</span></td>
+      <td class="text-nowrap">
+        {% if r.status == 'Pending' %}
+        <a href="{% url 'confirm_booking' r.pk %}" class="btn btn-sm btn-success">Confirm</a>
+        {% endif %}
+        {% if r.status == 'Confirmed' %}
+        <a href="{% url 'checkin' r.pk %}" class="btn btn-sm btn-primary">Check In</a>
+        {% endif %}
+        {% if r.status == 'Checked In' %}
+        <a href="{% url 'checkout' r.pk %}" class="btn btn-sm btn-warning">Check Out</a>
+        {% endif %}
+        <a href="{% url 'payment_create' r.pk %}" class="btn btn-sm btn-outline-success">Pay</a>
+        <a href="{% url 'reservation_edit' r.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{% url 'reservation_delete' r.pk %}" class="btn btn-sm btn-outline-danger">Cancel</a>
+      </td>
+    </tr>
+    {% empty %}<tr><td colspan="9" class="text-center text-muted">No reservations yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

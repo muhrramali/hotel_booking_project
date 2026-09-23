@@ -1,0 +1,23 @@
+{% extends 'public/base.html' %}
+{% block title %}Staff Login – Kutwal Dream Resort{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <h2><i class="fas fa-lock me-2"></i>Staff Portal</h2>
+    <p class="text-center text-muted mb-4">Management dashboard access for resort staff</p>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-kutwal w-100">Staff Login</button>
+    </form>
+    <p class="text-center mt-3 small"><a href="{% url 'home' %}">← Back to Resort Website</a></p>
+  </div>
+</div>
+{% endblock %}

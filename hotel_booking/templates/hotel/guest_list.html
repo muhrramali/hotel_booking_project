@@ -1,0 +1,31 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Guests{% endblock %}
+{% block page_title %}Guest Management{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <span class="text-muted">{{ guests.count }} guest(s) registered</span>
+  <a href="{% url 'guest_create' %}" class="btn btn-gold"><i class="fas fa-user-plus me-1"></i>Register Guest</a>
+</div>
+<div class="card">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>CNIC</th><th>Reservations</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for g in guests %}
+    <tr>
+      <td class="fw-bold">{{ g.full_name }}</td>
+      <td>{{ g.email }}</td>
+      <td>{{ g.phone }}</td>
+      <td>{{ g.cnic }}</td>
+      <td><span class="badge bg-primary">{{ g.res_count }}</span></td>
+      <td>
+        <a href="{% url 'guest_edit' g.pk %}" class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'guest_delete' g.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" class="text-center text-muted py-4">No guests yet. <a href="{% url 'guest_create' %}">Add one!</a></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
